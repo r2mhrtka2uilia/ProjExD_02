@@ -72,13 +72,13 @@ def main():
             if key_lst[k]:
                 kk_rct.move_ip(mv)
                 
-        if check_bound(screen.get_rect(), kk_rct) != (True, True):
+        if check_bound(screen.get_rect(), kk_rct) != (True, True): #衝突状態のこうかとん
             for k, mv in delta.items():
                 if key_lst[k]:
                     kk_rct.move_ip(-mv[0], -mv[1])
 
 
-        screen.blit(bg_img, [0, 0])
+        screen.blit(bg_img, [0, 0]) #loadした画像の表示　＃１
         screen.blit(kk_img, kk_rct)
         bb_rct.move_ip(vx, vy)
         yoko, tate = check_bound(screen.get_rect(), bb_rct)
@@ -87,13 +87,14 @@ def main():
         if not tate:
             vy *= -1
         screen.blit(bb_img, bb_rct)
-
+        
+        #追加機能２加速　＃１
         avx, avy = vx * accs[min(tmr//2000, 9)], vy * accs[min(tmr//2000, 9)]
         bb_rct.move_ip(avx, avy)
         screen.blit(bb_img, bb_rct)
         bb_img = bb_imgs[min(tmr//1000, 9)]
 
-
+        #追加機能３（途中経過）＃１
         if kk_rct.colliderect(bb_rct):
             kk_img = kka_img
             screen.blit(kk_img, kk_rct)

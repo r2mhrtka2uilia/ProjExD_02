@@ -11,6 +11,7 @@ delta = {
         pg.K_RIGHT : (+1, 0)
         }
 
+accs = [a for a in range(1, 11)]
 
 def check_bound(scr_rct:pg.Rect, obj_rct:pg.Rect) -> tuple[bool, bool]:
     """
@@ -46,7 +47,13 @@ def main():
     bb_rct = bb_img.get_rect()
     bb_rct.center = x, y
     vx, vy = +1, +1
-
+    bb_imgs = []
+    for r in range(1, 11):
+        bb_img = pg.Surface((20 * r, 20 * r))
+        pg.draw.circle(bb_img, (255, 0, 0), (10 * r, 10 * r), 10 * r)
+        bb_img.set_colorkey((0, 0, 0))
+        bb_imgs.append(bb_img)
+   
     
     tmr = 0
 
@@ -62,6 +69,7 @@ def main():
         for k, mv in delta.items():
             if key_lst[k]:
                 kk_rct.move_ip(mv)
+                
         if check_bound(screen.get_rect(), kk_rct) != (True, True):
             for k, mv in delta.items():
                 if key_lst[k]:
@@ -77,6 +85,11 @@ def main():
         if not tate:
             vy *= -1
         screen.blit(bb_img, bb_rct)
+        avx, avy = vx * accs[min(tmr//2000, 9)], vy * accs[min(tmr//2000, 9)]
+        bb_rct.move_ip(avx, avy)
+        screen.blit(bb_img, bb_rct)
+        bb_img = bb_imgs[min(tmr//1000, 9)]
+
         if kk_rct.colliderect(bb_rct):
             return
 

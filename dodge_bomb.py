@@ -36,6 +36,8 @@ def main():
     clock = pg.time.Clock()
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
+    kka_img = pg.image.load("ex02/fig/1.png")
+    kka_img = pg.transform.rotozoom(kka_img, 0, 2.0)
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
@@ -85,13 +87,20 @@ def main():
         if not tate:
             vy *= -1
         screen.blit(bb_img, bb_rct)
+
         avx, avy = vx * accs[min(tmr//2000, 9)], vy * accs[min(tmr//2000, 9)]
         bb_rct.move_ip(avx, avy)
         screen.blit(bb_img, bb_rct)
         bb_img = bb_imgs[min(tmr//1000, 9)]
 
+
         if kk_rct.colliderect(bb_rct):
-            return
+            kk_img = kka_img
+            screen.blit(kk_img, kk_rct)
+            tmr = 0
+            vx, vy = 0, 0
+            
+            
 
 
         pg.display.update()

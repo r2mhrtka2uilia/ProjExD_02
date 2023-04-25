@@ -55,6 +55,9 @@ def main():
         pg.draw.circle(bb_img, (255, 0, 0), (10 * r, 10 * r), 10 * r)
         bb_img.set_colorkey((0, 0, 0))
         bb_imgs.append(bb_img)
+
+    font1 = pg.font.SysFont(None, 100)
+    text1 = font1.render("Game Over", True, (0, 0, 0))
    
     
     tmr = 0
@@ -65,7 +68,6 @@ def main():
                 return 0
 
         tmr += 1
-
 
         key_lst = pg.key.get_pressed()
         for k, mv in delta.items():
@@ -100,9 +102,9 @@ def main():
             screen.blit(kk_img, kk_rct)
             tmr = 0
             vx, vy = 0, 0
+            screen.blit(text1, (600, 400))
             
             
-
 
         pg.display.update()
         clock.tick(1000)
